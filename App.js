@@ -1,13 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import Counter from './counter_page/Counter';
-
-export default function App() {
+import React, { cloneElement, Component } from "react";
+import { StyleSheet, View, Text } from "react-native";
+import Counter from "./counter_page/Counter";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+const App = (props) => {
   return (
-    <Counter/>
+    <View>
+      <Provider store={store}>
+        <Counter />
+      </Provider>
+    </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  
-});
+
+export default App;

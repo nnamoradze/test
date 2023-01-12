@@ -1,36 +1,39 @@
-import { cloneElement, useRef, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { cloneElement, Component, useState } from "react";
+import { StyleSheet, View, Text, Button, TouchableOpacity } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { addition, subtraction } from "../store/action";
 
 export default function Counter() {
-  const [count, setCount] = useState(0);
-  
+  const data = useSelector((state) => state.counter);
+  const dispatch = useDispatch();
+  const textColor = data >= 0 ? 'green' : 'red';
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text
-        style={[styles.counter_text,{color:count <= 0 ?'red' : 'green'}]}
-      >
-        {count}
-      </Text>
-
+    <View style={styles.root}>
+      <Text style={[styles.counter_text, {color:textColor}]}>{data}</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => setCount(count + 1)}
+        onPress={() => dispatch(addition())}
       >
-        <Text style={styles.text_button}>click for increase</Text>
+        <Text style={styles.text_button}>Click for increase</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: "#d13a3a" }]}
-        onPress={() => setCount(count - 1)}
+        style={[styles.button, { backgroundColor: "#ff0000" }]}
+        onPress={() => dispatch(subtraction())}
       >
-        <Text style={styles.text_button}>click for decrease</Text>
+        <Text style={styles.text_button}>Click for decrease</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  root: {
+    marginTop:'50%',
+    marginBottom:'50%',
+    alignItems:"center"
+  },
   button: {
     width: "45%",
     height: 55,
